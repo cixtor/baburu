@@ -9,7 +9,8 @@
 import Cocoa
 
 @NSApplicationMain
-class AppDelegate: NSObject, NSApplicationDelegate {
+class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
+    var timer: Timer = Timer()
 
     // Menu Bar Extras
     //
@@ -24,7 +25,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     var statusItem: NSStatusItem!
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
-        // Insert code here to initialize your application
+        NSUserNotificationCenter.default.delegate = self
+
+        self.startCheckingAlerts()
         let statusBar = NSStatusBar.system
 
         statusItem = statusBar.statusItem(withLength: NSStatusItem.squareLength)
@@ -33,6 +36,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
         let menu = NSMenu(title: "Menu")
         menu.addItem(withTitle: "Refresh", action: #selector(AppDelegate.checkAlerts), keyEquivalent: "")
+        menu.addItem(withTitle: "Notification", action: #selector(AppDelegate.showAlert), keyEquivalent: "")
         menu.addItem(withTitle: "Preferences", action: #selector(AppDelegate.preferences), keyEquivalent: "")
         menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
         statusItem.menu = menu
@@ -40,6 +44,41 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
+    }
+
+    func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
+        return true
+    }
+
+    @objc func startCheckingAlerts() {
+        print("Start checking alerts")
+        timer = Timer.scheduledTimer(
+            timeInterval: 2.0,
+            target: self,
+            selector: #selector(AppDelegate.checkAlerts),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+
+    @objc func stopCheckingAlerts() {
+        print("Stop checking alerts")
+        timer.invalidate()
+    }
+
+    @objc func showAlert() {
+        print("Show alert")
+
+        let nt = NSUserNotification()
+
+        nt.title = "Hello"
+        nt.subtitle = "How are you?"
+        nt.informativeText = "This is a very long text acting as the notification content."
+        nt.soundName = NSUserNotificationDefaultSoundName
+        nt.actionButtonTitle = "Close"
+        nt.hasActionButton = true
+
+        NSUserNotificationCenter.default.deliver(nt)
     }
 
     @objc func checkAlerts() {
