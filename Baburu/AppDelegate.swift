@@ -28,18 +28,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         NSUserNotificationCenter.default.delegate = self
 
         self.startCheckingAlerts()
-        let statusBar = NSStatusBar.system
-
-        statusItem = statusBar.statusItem(withLength: NSStatusItem.squareLength)
-
-        statusItem.button?.title = "🔔"
-
-        let menu = NSMenu(title: "Menu")
-        menu.addItem(withTitle: "Refresh", action: #selector(AppDelegate.checkAlerts), keyEquivalent: "")
-        menu.addItem(withTitle: "Notification", action: #selector(AppDelegate.showAlert), keyEquivalent: "")
-        menu.addItem(withTitle: "Preferences", action: #selector(AppDelegate.preferences), keyEquivalent: "")
-        menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
-        statusItem.menu = menu
+        self.drawMenuBarExtra()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -48,6 +37,17 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
+    }
+
+    @objc func drawMenuBarExtra() {
+        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
+
+        statusItem.button?.title = "🔔"
+
+        let menu = NSMenu(title: "Menu")
+        menu.addItem(withTitle: "Preferences", action: #selector(AppDelegate.openPreferences), keyEquivalent: "")
+        menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
+        statusItem.menu = menu
     }
 
     @objc func startCheckingAlerts() {
@@ -140,13 +140,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         print("server: \(response?.mimeType ?? "unknown")")
     }
 
-    @objc func preferences() {
-        print("Preferences")
+    @objc func openPreferences() {
+        print("Open preferences")
     }
 
     @objc func quit() {
         NSApplication.shared.terminate(self)
     }
-
 }
 
