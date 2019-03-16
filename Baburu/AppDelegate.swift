@@ -42,7 +42,9 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     @objc func drawMenuBarExtra() {
         statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
-        statusItem.button?.title = "🔔"
+        // Source: https://icons8.com/icon/20685/google-alerts
+        statusItem.button?.image = NSImage(named: "StatusIcon")
+        statusItem.button?.image?.isTemplate = true
 
         let menu = NSMenu(title: "Menu")
         menu.addItem(withTitle: "Preferences", action: #selector(AppDelegate.openPreferences), keyEquivalent: "")
