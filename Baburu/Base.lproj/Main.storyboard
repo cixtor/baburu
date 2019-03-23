@@ -674,9 +674,32 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Baburu" customModuleProvider="target"/>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Baburu" customModuleProvider="target">
+                    <connections>
+                        <outlet property="statusMenu" destination="vSY-ip-DY5" id="EVi-Ef-bEH"/>
+                    </connections>
+                </customObject>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <menu id="vSY-ip-DY5">
+                    <items>
+                        <menuItem title="Refresh" id="r0S-he-RX1" userLabel="Refresh">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                        </menuItem>
+                        <menuItem title="Preferences" id="UWX-Mg-JFc" userLabel="Preferences">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="clickedPreferences:" target="Voe-Tx-rLC" id="gzB-du-Tq1"/>
+                            </connections>
+                        </menuItem>
+                        <menuItem title="Quit" id="fgu-V2-nf0" userLabel="Quit">
+                            <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="clickedQuit:" target="Voe-Tx-rLC" id="7sk-tH-Kaw"/>
+                            </connections>
+                        </menuItem>
+                    </items>
+                </menu>
             </objects>
             <point key="canvasLocation" x="75" y="0.0"/>
         </scene>

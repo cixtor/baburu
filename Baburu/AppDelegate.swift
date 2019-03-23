@@ -24,6 +24,16 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
     // https://developer.apple.com/design/human-interface-guidelines/macos/extensions/menu-bar-extras/
     var statusItem: NSStatusItem!
 
+    @IBOutlet weak var statusMenu: NSMenu!
+
+    @IBAction func clickedQuit(_ sender: NSMenuItem) {
+        NSApplication.shared.terminate(self)
+    }
+
+    @IBAction func clickedPreferences(_ sender: NSMenuItem) {
+        print("Open preferences")
+    }
+
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         NSUserNotificationCenter.default.delegate = self
 
@@ -46,10 +56,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         statusItem.button?.image = NSImage(named: "StatusIcon")
         statusItem.button?.image?.isTemplate = true
 
-        let menu = NSMenu(title: "Menu")
-        menu.addItem(withTitle: "Preferences", action: #selector(AppDelegate.openPreferences), keyEquivalent: "")
-        menu.addItem(withTitle: "Quit", action: #selector(AppDelegate.quit), keyEquivalent: "")
-        statusItem.menu = menu
+        statusItem.menu = self.statusMenu
     }
 
     @objc func startCheckingAlerts() {
@@ -140,14 +147,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     @objc func handleServerError(response: URLResponse?) {
         print("server: \(response?.mimeType ?? "unknown")")
-    }
-
-    @objc func openPreferences() {
-        print("Open preferences")
-    }
-
-    @objc func quit() {
-        NSApplication.shared.terminate(self)
     }
 }
 
