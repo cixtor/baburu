@@ -12,33 +12,11 @@ import Cocoa
 class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDelegate {
     var timer: Timer = Timer()
 
-    // Menu Bar Extras
-    //
-    // A menu bar extra exposes app-specific functionality via an icon that
-    // appears in the menu bar when your app is running, even when it’s not the
-    // frontmost app. Menu bar extras are on the opposite side of the menu bar
-    // from your app's menus. The system hides menu bar extras to make room for
-    // app menus. Similarly, if there are too many menu bar extras, the system
-    // may hide some to avoid crowding app menus.
-    //
-    // https://developer.apple.com/design/human-interface-guidelines/macos/extensions/menu-bar-extras/
-    var statusItem: NSStatusItem!
-
-    @IBOutlet weak var statusMenu: NSMenu!
-
-    @IBAction func clickedQuit(_ sender: NSMenuItem) {
-        NSApplication.shared.terminate(self)
-    }
-
-    @IBAction func clickedPreferences(_ sender: NSMenuItem) {
-        print("Open preferences")
-    }
-
     func applicationDidFinishLaunching(_ aNotification: Notification) {
+        // Insert code here to initialize your application
         NSUserNotificationCenter.default.delegate = self
 
         self.startCheckingAlerts()
-        self.drawMenuBarExtra()
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {
@@ -47,16 +25,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
 
     func userNotificationCenter(_ center: NSUserNotificationCenter, shouldPresent notification: NSUserNotification) -> Bool {
         return true
-    }
-
-    @objc func drawMenuBarExtra() {
-        statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-
-        // Source: https://icons8.com/icon/20685/google-alerts
-        statusItem.button?.image = NSImage(named: "StatusIcon")
-        statusItem.button?.image?.isTemplate = true
-
-        statusItem.menu = self.statusMenu
     }
 
     @objc func startCheckingAlerts() {

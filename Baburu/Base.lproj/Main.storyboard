@@ -674,13 +674,14 @@
                         <outlet property="delegate" destination="Voe-Tx-rLC" id="PrD-fu-P6m"/>
                     </connections>
                 </application>
-                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Baburu" customModuleProvider="target">
-                    <connections>
-                        <outlet property="statusMenu" destination="vSY-ip-DY5" id="EVi-Ef-bEH"/>
-                    </connections>
-                </customObject>
+                <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Baburu" customModuleProvider="target"/>
                 <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
                 <customObject id="Ady-hI-5gd" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+                <customObject id="oMi-ye-PTz" customClass="StatusController" customModule="Baburu" customModuleProvider="target">
+                    <connections>
+                        <outlet property="statusMenu" destination="vSY-ip-DY5" id="Gd7-pD-bDw"/>
+                    </connections>
+                </customObject>
                 <menu id="vSY-ip-DY5">
                     <items>
                         <menuItem title="Refresh" id="r0S-he-RX1" userLabel="Refresh">
@@ -689,13 +690,13 @@
                         <menuItem title="Preferences" id="UWX-Mg-JFc" userLabel="Preferences">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
-                                <action selector="clickedPreferences:" target="Voe-Tx-rLC" id="gzB-du-Tq1"/>
+                                <action selector="clickedPreferences:" target="oMi-ye-PTz" id="bzZ-pf-Rbn"/>
                             </connections>
                         </menuItem>
                         <menuItem title="Quit" id="fgu-V2-nf0" userLabel="Quit">
                             <modifierMask key="keyEquivalentModifierMask"/>
                             <connections>
-                                <action selector="clickedQuit:" target="Voe-Tx-rLC" id="7sk-tH-Kaw"/>
+                                <action selector="clickedQuit:" target="oMi-ye-PTz" id="W0H-tg-fMI"/>
                             </connections>
                         </menuItem>
                     </items>
