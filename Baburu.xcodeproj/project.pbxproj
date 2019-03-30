@@ -12,6 +12,7 @@
 		81813F4F2360F60800F7016F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81813F4E2360F60800F7016F /* Assets.xcassets */; };
 		81813F522360F60800F7016F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81813F502360F60800F7016F /* Main.storyboard */; };
 		819F96F523612011005F0054 /* StatusController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819F96F423612011005F0054 /* StatusController.swift */; };
+		819F96F723612958005F0054 /* WebServiceClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 819F96F623612958005F0054 /* WebServiceClient.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,6 +24,7 @@
 		81813F532360F60800F7016F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		81813F542360F60800F7016F /* Baburu.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Baburu.entitlements; sourceTree = "<group>"; };
 		819F96F423612011005F0054 /* StatusController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusController.swift; sourceTree = "<group>"; };
+		819F96F623612958005F0054 /* WebServiceClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebServiceClient.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,12 +58,13 @@
 			isa = PBXGroup;
 			children = (
 				81813F4A2360F60700F7016F /* AppDelegate.swift */,
+				81813F4E2360F60800F7016F /* Assets.xcassets */,
+				81813F542360F60800F7016F /* Baburu.entitlements */,
+				81813F532360F60800F7016F /* Info.plist */,
+				81813F502360F60800F7016F /* Main.storyboard */,
 				819F96F423612011005F0054 /* StatusController.swift */,
 				81813F4C2360F60700F7016F /* ViewController.swift */,
-				81813F4E2360F60800F7016F /* Assets.xcassets */,
-				81813F502360F60800F7016F /* Main.storyboard */,
-				81813F532360F60800F7016F /* Info.plist */,
-				81813F542360F60800F7016F /* Baburu.entitlements */,
+				819F96F623612958005F0054 /* WebServiceClient.swift */,
 			);
 			path = Baburu;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 				81813F4D2360F60700F7016F /* ViewController.swift in Sources */,
 				819F96F523612011005F0054 /* StatusController.swift in Sources */,
 				81813F4B2360F60700F7016F /* AppDelegate.swift in Sources */,
+				819F96F723612958005F0054 /* WebServiceClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

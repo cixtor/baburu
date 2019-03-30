@@ -23,11 +23,21 @@ class StatusController: NSObject {
     // https://developer.apple.com/design/human-interface-guidelines/macos/extensions/menu-bar-extras/
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
+    // WebServiceClient allows the application to communicate with a web API.
+    let client = WebServiceClient()
+
     override func awakeFromNib() {
         // Source: https://icons8.com/icon/20685/google-alerts
         statusItem.button?.image = NSImage(named: "StatusIcon")
         statusItem.button?.image?.isTemplate = true
         statusItem.menu = self.statusMenu
+
+        client.fetch()
+    }
+
+    @IBAction func clickedRefresh(_ sender: NSMenuItem) {
+        print("Refresh")
+        client.fetch()
     }
 
     @IBAction func clickedPreferences(_ sender: NSMenuItem) {

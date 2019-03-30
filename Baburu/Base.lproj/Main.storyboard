@@ -686,6 +686,9 @@
                     <items>
                         <menuItem title="Refresh" id="r0S-he-RX1" userLabel="Refresh">
                             <modifierMask key="keyEquivalentModifierMask"/>
+                            <connections>
+                                <action selector="clickedRefresh:" target="oMi-ye-PTz" id="5sZ-1D-aMV"/>
+                            </connections>
                         </menuItem>
                         <menuItem title="Preferences" id="UWX-Mg-JFc" userLabel="Preferences">
                             <modifierMask key="keyEquivalentModifierMask"/>
