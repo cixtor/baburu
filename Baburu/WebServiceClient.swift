@@ -17,13 +17,15 @@ class WebServiceClient {
 
         req.httpMethod = "POST"
 
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let username = "root"
+        let password = "P455w0rd"
+        let loginString = String(format: "%@:%@", username, password)
+        let loginData = loginString.data(using: String.Encoding.utf8)!
+        let encodedLogin = loginData.base64EncodedString()
+
+        req.setValue("Basic \(encodedLogin)", forHTTPHeaderField: "Authorization")
         req.setValue("Xcode 11.1 (11A1027)", forHTTPHeaderField: "X-Powered-By")
         req.setValue("Mozilla/5.0 (KHTML, like Gecko) Safari/537.36", forHTTPHeaderField: "User-Agent")
-
-        let json = ["username": "root", "password": "P455w0rd"]
-        let input = try! JSONSerialization.data(withJSONObject: json, options: [])
-        req.httpBody = input
 
         let task = session.dataTask(with: req) { data, response, error in
             guard error == nil else {
