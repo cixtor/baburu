@@ -8,11 +8,27 @@
 
 import Foundation
 
+struct Alert {
+    var title: String
+    var subtitle: String
+    var informativeText: String
+}
+
+protocol WebServiceDelegate {
+    func webServiceDidUpdate(_ alert: Alert)
+}
+
 class WebServiceClient {
+    var delegate: WebServiceDelegate?
+
+    init(delegate: WebServiceDelegate) {
+        self.delegate = delegate
+    }
+
     func fetch() {
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
-        let url = URL(string: "https://cixtor.com/ifconfig/post")!
+        let url = URL(string: "https://baburu.test/alerts")!
         var req = URLRequest(url: url)
 
         req.httpMethod = "POST"
@@ -49,15 +65,25 @@ class WebServiceClient {
                 return
             }
 
-            guard let json = (try? JSONSerialization.jsonObject(with: content, options: JSONSerialization.ReadingOptions.mutableContainers)) as? [String: Any] else {
-                print("invalid json: \(content)")
-                return
+            if let alert = self.jsonData(content) {
+                self.delegate?.webServiceDidUpdate(alert)
             }
-
-            print("json: \(json)")
         }
 
         task.resume()
+    }
+
+    func jsonData(_ data: Data) -> Alert? {
+        typealias JSONDict = [String:AnyObject]
+
+        guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? JSONDict else {
+            print("invalid json: \(data)")
+            return nil
+        }
+
+        print("json: \(json)")
+
+        return nil
     }
 
     @objc func handleClientError(error: Error?) {

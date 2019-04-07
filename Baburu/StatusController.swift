@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StatusController: NSObject {
+class StatusController: NSObject, WebServiceDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
 
     // Menu Bar Extras
@@ -24,7 +24,7 @@ class StatusController: NSObject {
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
     // WebServiceClient allows the application to communicate with a web API.
-    let client = WebServiceClient()
+    var client: WebServiceClient!
 
     override func awakeFromNib() {
         // Source: https://icons8.com/icon/20685/google-alerts
@@ -32,7 +32,12 @@ class StatusController: NSObject {
         statusItem.button?.image?.isTemplate = true
         statusItem.menu = self.statusMenu
 
+        client = WebServiceClient(delegate: self)
         client.fetch()
+    }
+
+    func webServiceDidUpdate(_ alert: Alert) {
+        print(alert)
     }
 
     @IBAction func clickedRefresh(_ sender: NSMenuItem) {
