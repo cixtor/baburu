@@ -43,21 +43,6 @@ class AppDelegate: NSObject, NSApplicationDelegate, NSUserNotificationCenterDele
         timer.invalidate()
     }
 
-    @objc func showAlert() {
-        print("Show alert")
-
-        let nt = NSUserNotification()
-
-        nt.title = "Hello"
-        nt.subtitle = "How are you?"
-        nt.informativeText = "This is a very long text acting as the notification content."
-        nt.soundName = NSUserNotificationDefaultSoundName
-        nt.actionButtonTitle = "Close"
-        nt.hasActionButton = true
-
-        NSUserNotificationCenter.default.deliver(nt)
-    }
-
     @objc func checkAlerts() {
         print("Check alerts")
     }

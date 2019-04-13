@@ -81,9 +81,13 @@ class WebServiceClient {
             return nil
         }
 
-        print("json: \(json)")
+        let alert = Alert(
+            title: json["title"] as! String,
+            subtitle: json["subtitle"] as! String,
+            informativeText: json["informativeText"] as! String
+        )
 
-        return nil
+        return alert
     }
 
     @objc func handleClientError(error: Error?) {

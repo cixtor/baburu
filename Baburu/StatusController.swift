@@ -37,7 +37,16 @@ class StatusController: NSObject, WebServiceDelegate {
     }
 
     func webServiceDidUpdate(_ alert: Alert) {
-        print(alert)
+        let nt = NSUserNotification()
+
+        nt.title = alert.title
+        nt.subtitle = alert.subtitle
+        nt.informativeText = alert.informativeText
+        nt.soundName = NSUserNotificationDefaultSoundName
+        nt.actionButtonTitle = "Close"
+        nt.hasActionButton = true
+
+        NSUserNotificationCenter.default.deliver(nt)
     }
 
     @IBAction func clickedRefresh(_ sender: NSMenuItem) {
