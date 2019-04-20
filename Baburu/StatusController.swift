@@ -33,7 +33,8 @@ class StatusController: NSObject, WebServiceDelegate {
         statusItem.menu = self.statusMenu
 
         client = WebServiceClient(delegate: self)
-        client.fetch()
+
+        client.start(20.0)
     }
 
     func webServiceDidUpdate(_ alert: Alert) {
@@ -50,7 +51,7 @@ class StatusController: NSObject, WebServiceDelegate {
     }
 
     @IBAction func clickedRefresh(_ sender: NSMenuItem) {
-        print("Refresh")
+        print("Force alert check")
         client.fetch()
     }
 

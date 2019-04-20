@@ -21,11 +21,37 @@ protocol WebServiceDelegate {
 class WebServiceClient {
     var delegate: WebServiceDelegate?
 
+    var timer: Timer = Timer()
+
     init(delegate: WebServiceDelegate) {
         self.delegate = delegate
     }
 
+    func start(_ ti: TimeInterval) {
+        print("Start scheduled timer")
+        self.timer = Timer.scheduledTimer(
+            timeInterval: ti,
+            target: self,
+            selector: #selector(self.tick),
+            userInfo: nil,
+            repeats: true
+        )
+
+        self.timer.fire()
+    }
+
+    func stop() {
+        print("Stop scheduled timer")
+        self.timer.invalidate()
+    }
+
+    @objc func tick() {
+        print("Tick scheduled timer")
+        self.fetch()
+    }
+
     func fetch() {
+        print("Fetch service alerts")
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         let url = URL(string: "https://baburu.test/alerts")!
