@@ -38,6 +38,7 @@ class StatusController: NSObject, WebServiceDelegate {
     }
 
     func webServiceDidUpdate(_ alert: Alert) {
+        print("Fire user notification")
         let nt = NSUserNotification()
 
         nt.title = alert.title

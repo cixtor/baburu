@@ -12,6 +12,18 @@ struct Alert {
     var title: String
     var subtitle: String
     var informativeText: String
+
+    init?(_ json: [String:String]) {
+        guard let title = json["title"],
+            let subtitle = json["subtitle"],
+            let informativeText = json["informativeText"] else {
+                return nil
+        }
+
+        self.title = title
+        self.subtitle = subtitle
+        self.informativeText = informativeText
+    }
 }
 
 protocol WebServiceDelegate {
@@ -100,20 +112,14 @@ class WebServiceClient {
     }
 
     func jsonData(_ data: Data) -> Alert? {
-        typealias JSONDict = [String:AnyObject]
+        typealias JSONDict = [String:String]
 
         guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? JSONDict else {
             print("invalid json: \(data)")
             return nil
         }
 
-        let alert = Alert(
-            title: json["title"] as! String,
-            subtitle: json["subtitle"] as! String,
-            informativeText: json["informativeText"] as! String
-        )
-
-        return alert
+        return Alert(json)
     }
 
     @objc func handleClientError(error: Error?) {
