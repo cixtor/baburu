@@ -15,14 +15,17 @@ struct Alert {
 
     init?(_ json: [String:String]) {
         guard let title = json["title"],
-            let subtitle = json["subtitle"],
-            let informativeText = json["informativeText"] else {
-                return nil
+            let text = json["text"] else {
+            return nil
         }
 
         self.title = title
-        self.subtitle = subtitle
-        self.informativeText = informativeText
+        self.subtitle = ""
+        self.informativeText = text
+
+        if let subtitle = json["subtitle"] {
+            self.subtitle = subtitle
+        }
     }
 }
 
