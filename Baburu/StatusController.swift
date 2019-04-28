@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StatusController: NSObject, WebServiceDelegate {
+class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
 
     // Menu Bar Extras
@@ -26,6 +26,8 @@ class StatusController: NSObject, WebServiceDelegate {
     // WebServiceClient allows the application to communicate with a web API.
     var client: WebServiceClient!
 
+    var prefs: PreferencesWindow!
+
     override func awakeFromNib() {
         // Source: https://icons8.com/icon/20685/google-alerts
         statusItem.button?.image = NSImage(named: "StatusIcon")
@@ -33,8 +35,10 @@ class StatusController: NSObject, WebServiceDelegate {
         statusItem.menu = self.statusMenu
 
         client = WebServiceClient(delegate: self)
-
         client.start(20.0)
+
+        prefs = PreferencesWindow()
+        prefs.delegate = self
     }
 
     func webServiceDidUpdate(_ alert: Alert) {
@@ -51,6 +55,11 @@ class StatusController: NSObject, WebServiceDelegate {
         NSUserNotificationCenter.default.deliver(nt)
     }
 
+    func preferencesDidUpdate() {
+        print("Preferences did update")
+        client.fetch()
+    }
+
     @IBAction func clickedRefresh(_ sender: NSMenuItem) {
         print("Force alert check")
         client.fetch()
@@ -58,6 +67,7 @@ class StatusController: NSObject, WebServiceDelegate {
 
     @IBAction func clickedPreferences(_ sender: NSMenuItem) {
         print("Open preferences")
+        prefs.showWindow(nil)
     }
 
     @IBAction func clickedQuit(_ sender: NSMenuItem) {
