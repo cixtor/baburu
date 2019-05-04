@@ -28,6 +28,10 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         self.window?.center()
         self.window?.makeKeyAndOrderFront(nil)
         NSApp.activate(ignoringOtherApps: true)
+
+        let defaults = UserDefaults.standard
+        username.stringValue = defaults.string(forKey: "username") ?? DEFAULT_USERNAME
+        password.stringValue = defaults.string(forKey: "password") ?? DEFAULT_PASSWORD
     }
 
     func windowWillClose(_ notification: Notification) {

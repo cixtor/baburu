@@ -8,6 +8,9 @@
 
 import Foundation
 
+let DEFAULT_USERNAME = "foo"
+let DEFAULT_PASSWORD = "bar"
+
 struct Alert {
     var title: String
     var subtitle: String
@@ -74,8 +77,9 @@ class WebServiceClient {
 
         req.httpMethod = "POST"
 
-        let username = "root"
-        let password = "P455w0rd"
+        let defaults = UserDefaults.standard
+        let username = defaults.string(forKey: "username") ?? DEFAULT_USERNAME
+        let password = defaults.string(forKey: "password") ?? DEFAULT_PASSWORD
         let loginString = String(format: "%@:%@", username, password)
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let encodedLogin = loginData.base64EncodedString()
