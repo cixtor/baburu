@@ -75,7 +75,7 @@ class WebServiceClient {
         let url = URL(string: "https://baburu.test/alerts")!
         var req = URLRequest(url: url)
 
-        req.httpMethod = "POST"
+        req.httpMethod = "GET"
 
         let defaults = UserDefaults.standard
         let username = defaults.string(forKey: "username") ?? DEFAULT_USERNAME
