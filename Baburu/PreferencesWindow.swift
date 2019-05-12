@@ -13,6 +13,7 @@ protocol PreferencesWindowDelegate {
 }
 
 class PreferencesWindow: NSWindowController, NSWindowDelegate {
+    @IBOutlet weak var hostname: NSTextField!
     @IBOutlet weak var username: NSTextField!
     @IBOutlet weak var password: NSTextField!
 
@@ -30,12 +31,14 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         NSApp.activate(ignoringOtherApps: true)
 
         let defaults = UserDefaults.standard
+        hostname.stringValue = defaults.string(forKey: "hostname") ?? DEFAULT_HOSTNAME
         username.stringValue = defaults.string(forKey: "username") ?? DEFAULT_USERNAME
         password.stringValue = defaults.string(forKey: "password") ?? DEFAULT_PASSWORD
     }
 
     func windowWillClose(_ notification: Notification) {
         let defaults = UserDefaults.standard
+        defaults.setValue(hostname.stringValue, forKey: "hostname")
         defaults.setValue(username.stringValue, forKey: "username")
         defaults.setValue(password.stringValue, forKey: "password")
         delegate?.preferencesDidUpdate()

@@ -8,6 +8,7 @@
 
 import Foundation
 
+let DEFAULT_HOSTNAME = "https://baburu.test"
 let DEFAULT_USERNAME = "foo"
 let DEFAULT_PASSWORD = "bar"
 
@@ -70,16 +71,17 @@ class WebServiceClient {
 
     func fetch() {
         print("Fetch service alerts")
+        let defaults = UserDefaults.standard
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
-        let url = URL(string: "https://baburu.test/alerts")!
-        var req = URLRequest(url: url)
-
-        req.httpMethod = "GET"
-
-        let defaults = UserDefaults.standard
+        let hostname = defaults.string(forKey: "hostname") ?? DEFAULT_HOSTNAME
         let username = defaults.string(forKey: "username") ?? DEFAULT_USERNAME
         let password = defaults.string(forKey: "password") ?? DEFAULT_PASSWORD
+
+        let url = URL(string: hostname+"/alerts")!
+        var req = URLRequest(url: url)
+        req.httpMethod = "GET"
+
         let loginString = String(format: "%@:%@", username, password)
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let encodedLogin = loginData.base64EncodedString()
