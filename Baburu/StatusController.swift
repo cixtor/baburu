@@ -57,7 +57,8 @@ class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate 
 
     func preferencesDidUpdate() {
         print("Preferences did update")
-        client.fetch()
+        client.stop()
+        client.start(20.0)
     }
 
     @IBAction func clickedRefresh(_ sender: NSMenuItem) {
