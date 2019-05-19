@@ -35,7 +35,7 @@ class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate 
         statusItem.menu = self.statusMenu
 
         client = WebServiceClient(delegate: self)
-        client.start(20.0)
+        client.start()
 
         prefs = PreferencesWindow()
         prefs.delegate = self
@@ -58,7 +58,7 @@ class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate 
     func preferencesDidUpdate() {
         print("Preferences did update")
         client.stop()
-        client.start(20.0)
+        client.start()
     }
 
     @IBAction func clickedRefresh(_ sender: NSMenuItem) {

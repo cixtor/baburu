@@ -8,9 +8,10 @@
 
 import Foundation
 
-let DEFAULT_HOSTNAME = "https://baburu.test"
-let DEFAULT_USERNAME = "foo"
-let DEFAULT_PASSWORD = "bar"
+let DEFAULT_HOSTNAME: String = "https://baburu.test"
+let DEFAULT_USERNAME: String = "foo"
+let DEFAULT_PASSWORD: String = "bar"
+let DEFAULT_INTERVAL: String = "20.0"
 
 struct Alert {
     var title: String
@@ -46,8 +47,9 @@ class WebServiceClient {
         self.delegate = delegate
     }
 
-    func start(_ ti: TimeInterval) {
-        print("Start scheduled timer")
+    func start() {
+        let ti: TimeInterval = tickInterval()
+        print("Start scheduled timer: \(ti)")
         self.timer = Timer.scheduledTimer(
             timeInterval: ti,
             target: self,
@@ -129,6 +131,12 @@ class WebServiceClient {
         }
 
         return Alert(json)
+    }
+
+    func tickInterval() -> TimeInterval {
+        let defaults = UserDefaults.standard
+        let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
+        return Double(interval)!
     }
 
     @objc func handleClientError(error: Error?) {
