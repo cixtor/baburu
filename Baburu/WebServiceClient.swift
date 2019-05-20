@@ -136,7 +136,8 @@ class WebServiceClient {
     func tickInterval() -> TimeInterval {
         let defaults = UserDefaults.standard
         let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
-        return Double(interval)!
+        if let value = Double(interval) { return value }
+        return Double(DEFAULT_INTERVAL)!
     }
 
     @objc func handleClientError(error: Error?) {
