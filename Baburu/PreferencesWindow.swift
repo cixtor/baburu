@@ -43,7 +43,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         defaults.setValue(hostname.stringValue, forKey: "hostname")
         defaults.setValue(username.stringValue, forKey: "username")
         defaults.setValue(password.stringValue, forKey: "password")
-        defaults.setValue(interval.stringValue, forKey: "interval")
+        defaults.setValue(interval.doubleValue, forKey: "interval")
         delegate?.preferencesDidUpdate()
     }
 }

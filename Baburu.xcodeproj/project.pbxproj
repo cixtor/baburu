@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		8102AEB92362877200CA605C /* PreferencesWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8102AEB72362877200CA605C /* PreferencesWindow.swift */; };
 		8102AEBA2362877200CA605C /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 8102AEB82362877200CA605C /* PreferencesWindow.xib */; };
+		814061F02362BF4300F3F875 /* IntervalFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 814061EF2362BF4300F3F875 /* IntervalFormatter.swift */; };
 		81813F4B2360F60700F7016F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81813F4A2360F60700F7016F /* AppDelegate.swift */; };
 		81813F4D2360F60700F7016F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81813F4C2360F60700F7016F /* ViewController.swift */; };
 		81813F4F2360F60800F7016F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 81813F4E2360F60800F7016F /* Assets.xcassets */; };
@@ -20,6 +21,7 @@
 /* Begin PBXFileReference section */
 		8102AEB72362877200CA605C /* PreferencesWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesWindow.swift; sourceTree = "<group>"; };
 		8102AEB82362877200CA605C /* PreferencesWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
+		814061EF2362BF4300F3F875 /* IntervalFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntervalFormatter.swift; sourceTree = "<group>"; };
 		81813F472360F60700F7016F /* Baburu.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Baburu.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		81813F4A2360F60700F7016F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		81813F4C2360F60700F7016F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -71,6 +73,7 @@
 				8102AEB72362877200CA605C /* PreferencesWindow.swift */,
 				8102AEB82362877200CA605C /* PreferencesWindow.xib */,
 				819F96F623612958005F0054 /* WebServiceClient.swift */,
+				814061EF2362BF4300F3F875 /* IntervalFormatter.swift */,
 			);
 			path = Baburu;
 			sourceTree = "<group>";
@@ -147,6 +150,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				81813F4D2360F60700F7016F /* ViewController.swift in Sources */,
+				814061F02362BF4300F3F875 /* IntervalFormatter.swift in Sources */,
 				8102AEB92362877200CA605C /* PreferencesWindow.swift in Sources */,
 				819F96F523612011005F0054 /* StatusController.swift in Sources */,
 				81813F4B2360F60700F7016F /* AppDelegate.swift in Sources */,
