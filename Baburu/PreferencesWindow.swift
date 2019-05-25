@@ -17,6 +17,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var username: NSTextField!
     @IBOutlet weak var password: NSTextField!
     @IBOutlet weak var interval: NSTextField!
+    @IBOutlet weak var txtlabel: NSTextField!
 
     var delegate: PreferencesWindowDelegate?
 
