@@ -39,6 +39,11 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         interval.stringValue = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
     }
 
+    @IBAction func clickedSave(_ sender: NSButton) {
+        print("Save preferences")
+        self.window?.close()
+    }
+
     func windowWillClose(_ notification: Notification) {
         let defaults = UserDefaults.standard
         defaults.setValue(hostname.stringValue, forKey: "hostname")
