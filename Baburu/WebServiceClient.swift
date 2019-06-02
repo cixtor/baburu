@@ -90,6 +90,7 @@ class WebServiceClient {
 
         req.setValue("Basic \(encodedLogin)", forHTTPHeaderField: "Authorization")
         req.setValue("Xcode 11.1 (11A1027)", forHTTPHeaderField: "X-Powered-By")
+        req.setValue(self.uniqueUserID(), forHTTPHeaderField: "X-Unique-User-ID")
         req.setValue("Mozilla/5.0 (KHTML, like Gecko) Safari/537.36", forHTTPHeaderField: "User-Agent")
 
         let task = session.dataTask(with: req) { data, response, error in
@@ -138,6 +139,14 @@ class WebServiceClient {
         let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
         if let value = Double(interval) { return value }
         return Double(DEFAULT_INTERVAL)!
+    }
+
+    func uniqueUserID() -> String {
+        let defaults = UserDefaults.standard
+        if let uuid = defaults.string(forKey: "uuid") { return uuid }
+        let uuid = UUID().uuidString
+        defaults.setValue(uuid, forKey: "uuid")
+        return uuid
     }
 
     @objc func handleClientError(error: Error?) {
