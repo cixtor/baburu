@@ -17,21 +17,6 @@ struct Alert {
     var title: String
     var subtitle: String
     var informativeText: String
-
-    init?(_ json: [String:String]) {
-        guard let title = json["title"],
-            let text = json["text"] else {
-            return nil
-        }
-
-        self.title = title
-        self.subtitle = ""
-        self.informativeText = text
-
-        if let subtitle = json["subtitle"] {
-            self.subtitle = subtitle
-        }
-    }
 }
 
 protocol WebServiceDelegate {
@@ -124,14 +109,12 @@ class WebServiceClient {
     }
 
     func jsonData(_ data: Data) -> Alert? {
-        typealias JSONDict = [String:String]
-
-        guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? JSONDict else {
+        guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? Alert else {
             print("invalid json: \(data)")
             return nil
         }
 
-        return Alert(json)
+        return json
     }
 
     func tickInterval() -> TimeInterval {
