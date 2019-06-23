@@ -13,10 +13,13 @@ let DEFAULT_USERNAME: String = "foo"
 let DEFAULT_PASSWORD: String = "bar"
 let DEFAULT_INTERVAL: String = "20.0"
 
-struct Alert {
-    var title: String
-    var subtitle: String
-    var informativeText: String
+struct Alert: Codable {
+    var ok: Bool?
+    var error: String?
+    var title: String?
+    var subtitle: String?
+    var informativeText: String?
+    var remaining: Int?
 }
 
 protocol WebServiceDelegate {
@@ -108,13 +111,22 @@ class WebServiceClient {
         task.resume()
     }
 
-    func jsonData(_ data: Data) -> Alert? {
-        guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? Alert else {
-            print("invalid json: \(data)")
+    func jsonData(_ json: Data) -> Alert? {
+        let dec = JSONDecoder()
+        let text = String(data: json, encoding: String.Encoding.utf8)
+        print("trying decode: \(text.debugDescription)")
+
+        guard let alert = (try? dec.decode(Alert.self, from: json)) else {
+            print("cannot decode json")
             return nil
         }
 
-        return json
+        if alert.title != nil {
+            print("alert: \(alert)")
+            return alert
+        }
+
+        return nil
     }
 
     func tickInterval() -> TimeInterval {
