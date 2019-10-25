@@ -8,6 +8,11 @@
 
 import Foundation
 
+let DEFAULT_HOSTNAME: String = "https://baburu.test"
+let DEFAULT_USERNAME: String = "foo"
+let DEFAULT_PASSWORD: String = "bar"
+let DEFAULT_INTERVAL: String = "20.0"
+
 struct Alert {
     var title: String
     var subtitle: String
@@ -42,8 +47,9 @@ class WebServiceClient {
         self.delegate = delegate
     }
 
-    func start(_ ti: TimeInterval) {
-        print("Start scheduled timer")
+    func start() {
+        let ti: TimeInterval = tickInterval()
+        print("Start scheduled timer: \(ti)")
         self.timer = Timer.scheduledTimer(
             timeInterval: ti,
             target: self,
@@ -67,21 +73,24 @@ class WebServiceClient {
 
     func fetch() {
         print("Fetch service alerts")
+        let defaults = UserDefaults.standard
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
-        let url = URL(string: "https://baburu.test/alerts")!
+        let hostname = defaults.string(forKey: "hostname") ?? DEFAULT_HOSTNAME
+        let username = defaults.string(forKey: "username") ?? DEFAULT_USERNAME
+        let password = defaults.string(forKey: "password") ?? DEFAULT_PASSWORD
+
+        let url = URL(string: hostname+"/alerts")!
         var req = URLRequest(url: url)
+        req.httpMethod = "GET"
 
-        req.httpMethod = "POST"
-
-        let username = "root"
-        let password = "P455w0rd"
         let loginString = String(format: "%@:%@", username, password)
         let loginData = loginString.data(using: String.Encoding.utf8)!
         let encodedLogin = loginData.base64EncodedString()
 
         req.setValue("Basic \(encodedLogin)", forHTTPHeaderField: "Authorization")
         req.setValue("Xcode 11.1 (11A1027)", forHTTPHeaderField: "X-Powered-By")
+        req.setValue(self.uniqueUserID(), forHTTPHeaderField: "X-Unique-User-ID")
         req.setValue("Mozilla/5.0 (KHTML, like Gecko) Safari/537.36", forHTTPHeaderField: "User-Agent")
 
         let task = session.dataTask(with: req) { data, response, error in
@@ -123,6 +132,21 @@ class WebServiceClient {
         }
 
         return Alert(json)
+    }
+
+    func tickInterval() -> TimeInterval {
+        let defaults = UserDefaults.standard
+        let interval = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
+        if let value = Double(interval) { return value }
+        return Double(DEFAULT_INTERVAL)!
+    }
+
+    func uniqueUserID() -> String {
+        let defaults = UserDefaults.standard
+        if let uuid = defaults.string(forKey: "uuid") { return uuid }
+        let uuid = UUID().uuidString
+        defaults.setValue(uuid, forKey: "uuid")
+        return uuid
     }
 
     @objc func handleClientError(error: Error?) {
