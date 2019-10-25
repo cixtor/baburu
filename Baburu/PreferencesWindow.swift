@@ -16,6 +16,8 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
     @IBOutlet weak var hostname: NSTextField!
     @IBOutlet weak var username: NSTextField!
     @IBOutlet weak var password: NSTextField!
+    @IBOutlet weak var interval: NSTextField!
+    @IBOutlet weak var txtlabel: NSTextField!
 
     var delegate: PreferencesWindowDelegate?
 
@@ -34,6 +36,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         hostname.stringValue = defaults.string(forKey: "hostname") ?? DEFAULT_HOSTNAME
         username.stringValue = defaults.string(forKey: "username") ?? DEFAULT_USERNAME
         password.stringValue = defaults.string(forKey: "password") ?? DEFAULT_PASSWORD
+        interval.stringValue = defaults.string(forKey: "interval") ?? DEFAULT_INTERVAL
     }
 
     func windowWillClose(_ notification: Notification) {
@@ -41,6 +44,7 @@ class PreferencesWindow: NSWindowController, NSWindowDelegate {
         defaults.setValue(hostname.stringValue, forKey: "hostname")
         defaults.setValue(username.stringValue, forKey: "username")
         defaults.setValue(password.stringValue, forKey: "password")
+        defaults.setValue(interval.doubleValue, forKey: "interval")
         delegate?.preferencesDidUpdate()
     }
 }
