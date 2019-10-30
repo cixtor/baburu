@@ -13,25 +13,13 @@ let DEFAULT_USERNAME: String = "foo"
 let DEFAULT_PASSWORD: String = "bar"
 let DEFAULT_INTERVAL: String = "20.0"
 
-struct Alert {
-    var title: String
-    var subtitle: String
-    var informativeText: String
-
-    init?(_ json: [String:String]) {
-        guard let title = json["title"],
-            let text = json["text"] else {
-            return nil
-        }
-
-        self.title = title
-        self.subtitle = ""
-        self.informativeText = text
-
-        if let subtitle = json["subtitle"] {
-            self.subtitle = subtitle
-        }
-    }
+struct Alert: Codable {
+    var ok: Bool?
+    var error: String?
+    var title: String?
+    var subtitle: String?
+    var informativeText: String?
+    var remaining: Int?
 }
 
 protocol WebServiceDelegate {
@@ -106,12 +94,12 @@ class WebServiceClient {
             }
 
             guard let mime = res.mimeType, mime == "application/json" else {
-                print("invalid mime type")
+                print("Web service MIME-type: \(res.mimeType ?? "<unknown>")")
                 return
             }
 
             guard let content = data else {
-                print("empty data")
+                print("Web service response is empty")
                 return
             }
 
@@ -123,15 +111,22 @@ class WebServiceClient {
         task.resume()
     }
 
-    func jsonData(_ data: Data) -> Alert? {
-        typealias JSONDict = [String:String]
+    func jsonData(_ json: Data) -> Alert? {
+        let dec = JSONDecoder()
+        let text = String(data: json, encoding: String.Encoding.utf8)
+        print("Web service response: \(text.debugDescription)")
 
-        guard let json = (try? JSONSerialization.jsonObject(with: data, options: [])) as? JSONDict else {
-            print("invalid json: \(data)")
+        guard let alert = (try? dec.decode(Alert.self, from: json)) else {
+            print("Web service response is invalid")
             return nil
         }
 
-        return Alert(json)
+        // NOTES(cixtor): since all fields are optional, double check them.
+        if alert.title != nil && alert.informativeText != nil {
+            return alert
+        }
+
+        return nil
     }
 
     func tickInterval() -> TimeInterval {
@@ -150,10 +145,10 @@ class WebServiceClient {
     }
 
     @objc func handleClientError(error: Error?) {
-        print("client: \(error?.localizedDescription ?? "unknown")")
+        print("Client error: \(error?.localizedDescription ?? "unknown")")
     }
 
     @objc func handleServerError(response: URLResponse?) {
-        print("server: \(response?.mimeType ?? "unknown")")
+        print("Server error: \(response?.mimeType ?? "unknown")")
     }
 }
