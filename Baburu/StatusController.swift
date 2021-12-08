@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate {
+class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate, NSUserNotificationCenterDelegate {
     @IBOutlet weak var statusMenu: NSMenu!
 
     // Menu Bar Extras
@@ -23,6 +23,8 @@ class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate 
     // https://developer.apple.com/design/human-interface-guidelines/macos/extensions/menu-bar-extras/
     let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
 
+    var nc = NSUserNotificationCenter.default
+
     // WebServiceClient allows the application to communicate with a web API.
     var client: WebServiceClient!
 
@@ -34,6 +36,8 @@ class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate 
         statusItem.button?.image?.isTemplate = true
         statusItem.menu = self.statusMenu
 
+        nc.delegate = self
+
         client = WebServiceClient(delegate: self)
         client.start()
 
@@ -43,16 +47,17 @@ class StatusController: NSObject, WebServiceDelegate, PreferencesWindowDelegate 
 
     func webServiceDidUpdate(_ alert: Alert) {
         print("Fire user notification")
-        let nt = NSUserNotification()
+        let nt = NSUserNotification.init()
 
+        nt.identifier = UUID().uuidString
         nt.title = alert.title
         nt.subtitle = alert.subtitle
         nt.informativeText = alert.informativeText
         nt.soundName = NSUserNotificationDefaultSoundName
         nt.actionButtonTitle = "Close"
-        nt.hasActionButton = true
+        nt.hasActionButton = false
 
-        NSUserNotificationCenter.default.deliver(nt)
+        nc.deliver(nt)
     }
 
     func preferencesDidUpdate() {
